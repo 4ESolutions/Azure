@@ -1,0 +1,3 @@
+[submodule "AzureVirtualDesktop"]
+	path = AzureVirtualDesktop
+	url = https://github.com/4ESolutions/AzureVirtualDesktop.git
