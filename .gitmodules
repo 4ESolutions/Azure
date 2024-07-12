@@ -1,6 +1,3 @@
 [submodule "AzureVirtualDesktop"]
 	path = AzureVirtualDesktop
 	url = https://github.com/4ESolutions/AzureVirtualDesktop.git
-[submodule "AzureSharedModules"]
-	path = AzureSharedModules
-	url = https://github.com/4ESolutions/AzureSharedModules.git
