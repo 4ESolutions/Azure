@@ -1,0 +1,181 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {      
+    "AzTenantID": {
+      "value": ""
+    },
+    "artifactsLocation": {
+      "value": "" 
+    },
+    "_artifactsLocationSASRef": {
+      "value": "" 
+    },
+    "AVDResourceGroup": {
+      "value": "rg-avd-uat1" 
+    },
+    "workspaceLocation": {
+      "value": "australiaeast" 
+    },
+    "newBuild": {
+      "value": true
+    },
+    "update": {
+      "value": true
+    },
+    "monitoringAgent": {
+      "value": false
+    },
+    "ephemeral": {
+      "value": false
+    },
+    "AADJoin": {
+      "value": false
+    },
+    "intune": {
+      "value": false
+    },
+    "workspaceName": {
+      "value": "ws-u1"
+    },
+    "applicationGroupReferences": {
+      "value": ""
+    },
+    "appGroupFriendlyName": {
+      "value": "UAT 1 App Group"
+    },
+    "desktopName": {
+      "value": "UAT1 Desktop"
+    },
+    "keyVaultName": {
+      "value": "kv-avd-uat1" 
+    },
+    "keyVaultSKU": {
+      "value": "standard" 
+    },
+    "keyType": {
+      "value": "standard" 
+    },
+    "keySize": {
+      "value": 2048 
+    },
+    "diskEncryptionRequired": {
+      "value": true 
+    },
+    "hostPoolName": {
+      "value": "hp-u1"
+    },
+    "hostPoolFriendlyName": {
+      "value": "UAT1 HostPool"
+    },
+    "hostPoolType": {
+      "value": "Personal"
+    },
+    "personalDesktopAssignmentType": {
+      "value": "Automatic"
+    },
+    "maxSessionLimit": {
+      "value": 10
+    },
+    "loadBalancerType": {
+      "value": "BreadthFirst"
+    },
+    "customRdpProperty": {
+      "value": "audiocapturemode:i:1;audiomode:i:0;camerastoredirect:s:*;devicestoredirect:s:*;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:0;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2" 
+    },
+    "tokenExpirationTime": {
+      "value": "2024-06-30T00:00:01Z"
+    },
+    "ouPath": {
+      "value": "none"
+    },
+    "domain": {
+      "value": "none"
+    },
+    "administratorAccountUserName": {
+      "value": "vmadmin"
+    },
+    "administratorAccountPassword": {
+      "value": ""
+    },
+    "localAdministratorAccountUserName": {
+      "value": "vmadmin"
+    },
+    "localAdministratorAccountPassword": {
+      "value": ""
+    },
+    "vmResourceGroup": {
+      "value": "rg-avd-uat1"
+    },
+    "vmLocation": {
+      "value": "australiaeast"
+    },
+    "vmSize": {
+      "value": "Standard_D2s_v3"
+    },
+    "numberOfInstances": {
+      "value": 2
+    },
+    "currentInstances": {
+      "value": 0
+    },
+    "vmPrefix": {
+      "value": "avd-u1-vm"
+    },
+    "vmDiskType": {
+      "value": "Premium_LRS"
+    },
+    "existingVNETResourceGroup": {
+      "value": "rg-avd-uat1"
+    },
+    "existingVNETName": {
+      "value": "vn-np-avd-01"
+    },
+    "existingSubnetName": {
+      "value": "default"
+    },
+    "sharedImageGalleryVersionName": {
+      "value": "none"
+    },
+    "assignUsers": {
+      "value": "true" 
+    },
+    "defaultUsers": {
+      "value": "" 
+    },
+    "appID": {
+      "value": "" 
+    },
+    "appSecret": {
+      "value": ""
+    },
+    "logworkspaceSub": {
+      "value": ""
+    },
+    "logworkspaceResourceGroup": {
+      "value": "rg-la-001"
+    },
+    "logworkspaceName": {
+      "value" : "la-np-monitor-001"
+    },
+    "workspaceID": {
+      "value": ""
+    },
+    "workspaceKey": {
+      "value": ""
+    },
+    "DCRResourceGroup": {
+      "value" : "rg-la-001"
+    },
+    "targetSubResource": {
+        "value": [
+            "connection",
+            "feed",
+            "global"
+        ]
+    },
+    "subnetName": {
+        "value": "default"
+    }  
+  }
+}
