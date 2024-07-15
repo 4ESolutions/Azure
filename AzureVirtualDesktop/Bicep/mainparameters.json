@@ -11,8 +11,11 @@
     "_artifactsLocationSASRef": {
       "value": "" 
     },
-    "AVDResourceGroup": {
-      "value": "rg-avd-uat1" 
+    "EnvironmentType": {
+      "value": "Dev" 
+    },
+    "DeploymentScenario": {
+      "value": "Test" 
     },
     "workspaceLocation": {
       "value": "australiaeast" 
@@ -24,31 +27,19 @@
       "value": true
     },
     "monitoringAgent": {
-      "value": false
+      "value": true
     },
     "ephemeral": {
       "value": false
     },
     "AADJoin": {
-      "value": false
+      "value": true
     },
     "intune": {
       "value": false
     },
-    "workspaceName": {
-      "value": "ws-u1"
-    },
     "applicationGroupReferences": {
       "value": ""
-    },
-    "appGroupFriendlyName": {
-      "value": "UAT 1 App Group"
-    },
-    "desktopName": {
-      "value": "UAT1 Desktop"
-    },
-    "keyVaultName": {
-      "value": "kv-avd-uat1" 
     },
     "keyVaultSKU": {
       "value": "standard" 
@@ -61,12 +52,6 @@
     },
     "diskEncryptionRequired": {
       "value": true 
-    },
-    "hostPoolName": {
-      "value": "hp-u1"
-    },
-    "hostPoolFriendlyName": {
-      "value": "UAT1 HostPool"
     },
     "hostPoolType": {
       "value": "Personal"
@@ -83,9 +68,6 @@
     "customRdpProperty": {
       "value": "audiocapturemode:i:1;audiomode:i:0;camerastoredirect:s:*;devicestoredirect:s:*;drivestoredirect:s:;redirectclipboard:i:1;redirectcomports:i:0;redirectprinters:i:1;redirectsmartcards:i:1;screen mode id:i:2" 
     },
-    "tokenExpirationTime": {
-      "value": "2024-06-30T00:00:01Z"
-    },
     "ouPath": {
       "value": "none"
     },
@@ -93,19 +75,26 @@
       "value": "none"
     },
     "administratorAccountUserName": {
-      "value": "vmadmin"
+      "value": "vmdomainadmin"
     },
     "administratorAccountPassword": {
       "value": ""
     },
     "localAdministratorAccountUserName": {
-      "value": "vmadmin"
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/2851e0e6-7386-4b93-9ce7-24a06889b8b8/resourceGroups/rg-np-xbox-hsb/providers/Microsoft.KeyVault/vaults/kv-np-sit-hsb-001"
+        },
+        "secretName": "vmAdminUserName"
+      }
     },
     "localAdministratorAccountPassword": {
-      "value": ""
-    },
-    "vmResourceGroup": {
-      "value": "rg-avd-uat1"
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/2851e0e6-7386-4b93-9ce7-24a06889b8b8/resourceGroups/rg-np-xbox-hsb/providers/Microsoft.KeyVault/vaults/kv-np-sit-hsb-001"
+        },
+        "secretName": "vmAdminPassword"
+      }
     },
     "vmLocation": {
       "value": "australiaeast"
@@ -114,16 +103,16 @@
       "value": "Standard_D2s_v3"
     },
     "numberOfInstances": {
-      "value": 2
+      "value": 1
     },
     "currentInstances": {
       "value": 0
     },
-    "vmPrefix": {
-      "value": "avd-u1-vm"
-    },
     "vmDiskType": {
       "value": "Premium_LRS"
+    },
+    "existingResources": {
+      "value": true
     },
     "existingVNETResourceGroup": {
       "value": "rg-avd-uat1"
@@ -151,12 +140,6 @@
     },
     "logworkspaceSub": {
       "value": ""
-    },
-    "logworkspaceResourceGroup": {
-      "value": "rg-la-001"
-    },
-    "logworkspaceName": {
-      "value" : "la-np-monitor-001"
     },
     "workspaceID": {
       "value": ""

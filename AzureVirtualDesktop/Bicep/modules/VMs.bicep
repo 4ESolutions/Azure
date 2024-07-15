@@ -129,6 +129,8 @@ param AVDnumberOfInstances int
 @description('Current number of Session Host VMs. Populated automatically for upgrade build. Do not edit.')
 param currentInstances int
 
+param useExistingResources bool = true
+
 @description('Resource Group containing the VNET to which to join Session Host VMs.')
 param existingVNETResourceGroup string
 
@@ -148,7 +150,7 @@ param tagParams object = {
 
 //***********************************************************************************************************************
 //Variables - All
-var subnetID = resourceId(existingVNETResourceGroup, 'Microsoft.Network/virtualNetworks/subnets', existingVNETName, existingSubnetName)
+var subnetID = useExistingResources ? resourceId(existingVNETResourceGroup, 'Microsoft.Network/virtualNetworks/subnets', existingVNETName, existingSubnetName) : null
 var avSetSKU = 'Aligned'
 var networkAdapterPostfix = '-nic'
 

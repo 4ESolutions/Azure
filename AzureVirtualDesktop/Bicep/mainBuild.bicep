@@ -3,13 +3,14 @@
 targetScope = 'subscription'
 param AzTenantID string = subscription().tenantId
 param subscriptionID string = subscription().subscriptionId
+param EnvironmentName string = 'avd'
+param EnvironmentType string = 'dev'
+param DeploymentScenario string = 'test01'
 param artifactsLocation string
 @secure()
 param _artifactsLocationSASRef string
-param AVDResourceGroup string
+param AVDResourceGroup string = 'rg-avd-${EnvironmentType}-${DeploymentScenario}'
 param workspaceLocation string
-param KeyVaultResourceGroup string
-param useExistingResources bool = true
 
 //***********************************************************************************************************************
 //Core Build Options Update, NewBuild
@@ -21,32 +22,32 @@ param update bool = false
 //***********************************************************************************************************************
 //Options Azure AD Join, Intune, Ephemeral disks etc
 @description('Boolean used to determine if Monitoring agent is needed')
-param monitoringAgent bool = false
+param monitoringAgent bool = true
 @description('Wheter to use emphemeral disks for VMs')
 param ephemeral bool = false
 @description('Declares whether Azure AD joined or not')
-param AADJoin bool = false
+param AADJoin bool = true
 @description('Determines if Session Hosts are auto enrolled in Intune')
 param intune bool = false
 
 //***********************************************************************************************************************
 //Workspace
 @description('Name of the AVD Workspace to used for this deployment')
-param workspaceName string
+param workspaceName string = 'ws-${DeploymentScenario}'
 @description('List of application group resource IDs to be added to Workspace. MUST add existing ones!')
 param applicationGroupReferences string
 
 //***********************************************************************************************************************
 //Application Group Settings
 @description('Application Group Friendly name. This shows in Remote Desktop client.')
-param appGroupFriendlyName string
+param appGroupFriendlyName string = '${DeploymentScenario} App Group'
 @description('Friendly name of Desktop Application Group. This is shown under Remote Desktop client.')
-param desktopName string
+param desktopName string = '${DeploymentScenario} Desktop'
 
 //***********************************************************************************************************************
 //Disk Encryption Settings - Key Vault etc
 @description('Key Vault Name for Disk Encryption.')
-param keyVaultName string 
+param keyVaultName string = 'kv-avd-${DeploymentScenario}'
 
 @description('Key Vault Disk Encryption SKU')
 @allowed([
@@ -73,10 +74,10 @@ param diskEncryptionRequired bool = false
 //***********************************************************************************************************************
 //Host Pool Settings
 @description('Name for Host Pool.')
-param hostPoolName string
+param hostPoolName string = 'hp-${DeploymentScenario}'
 
 @description('Friendly Name of the Host Pool, this is visible via the AVD client')
-param hostPoolFriendlyName string
+param hostPoolFriendlyName string = '${DeploymentScenario} HostPool'
 
 @description('Type used for Host Pool.')
 @allowed([
@@ -105,7 +106,7 @@ param loadBalancerType string = 'BreadthFirst'
 param customRdpProperty string
 
 @description('Expiration time for the HostPool registration token. This is only used to configure the Host Pool. The VM deployment generates a token if required.')
-param tokenExpirationTime string
+param tokenExpirationTime string = dateTimeAdd(utcNow('u'), 'P30D')
 
 @description('OU Path were new AVD Session Hosts will be placed in Active Directory')
 param ouPath string
@@ -115,7 +116,7 @@ param domain string
 
 //***********************************************************************************************************************
 //Session Host VM Settings
-@description('Administrator Login Password for Session Hosts.')
+@description('Administrator Login UserName Domain Join operation.')
 @secure()
 param administratorAccountUserName string
 
@@ -131,10 +132,10 @@ param localAdministratorAccountUserName string
 param localAdministratorAccountPassword string 
 
 @description('Resource Group to deploy Session Host VMs into.')
-param vmResourceGroup string
+param vmResourceGroup string = 'rg-avd-vms-${EnvironmentType}-${DeploymentScenario}'
 
 @description('Azure Region to deploy VM Session Hosts into.')
-param vmLocation string
+param vmLocation string = 'australiaeast'
 
 @description('VM Size to be used for Session Host build. E.g. Standard_D2s_v3')
 param vmSize string
@@ -146,7 +147,7 @@ param numberOfInstances int = 2
 param currentInstances int = 0
 
 @description('Prefix to use for Session Host VM build. Build will add the version details to this. E.g. AVD-PROD-11-0-x X being machine number.')
-param vmPrefix string 
+param vmPrefix string = 'avd-${DeploymentScenario}-vm'
 
 @description('Required storage type for Session Host VM OS disk.')
 @allowed([
@@ -155,6 +156,9 @@ param vmPrefix string
 ])
 param vmDiskType string
 
+//param useExistingResources bool = true
+
+//use if useExistingResources = true
 @description('Resource Group containing the VNET to which to join Session Host VMs.')
 param existingVNETResourceGroup string
 
@@ -163,6 +167,16 @@ param existingVNETName string
 
 @description('The name of the relevant VNET Subnet that is to be used for deployment.')
 param existingSubnetName string
+
+//use if useExistingResources = false
+@description('Resource Group containing the VNET to which to join Session Host VMs.')
+param vNetResourceGroup string = 'rg-net-${EnvironmentType}-${DeploymentScenario}'
+
+@description('Name of the VNET that the Session Host VMs will be connected to.')
+param vNetName string = 'vn-${EnvironmentType}-${EnvironmentName}-01'
+
+@description('The name of the relevant VNET Subnet that is to be used for deployment.')
+param subnetName string = 'default'
 
 //***********************************************************************************************************************
 //Shared Image Parameters
@@ -193,10 +207,10 @@ param appSecret string
 param logworkspaceSub string
 
 @description('Resource Group that Log Analytics Workspace is located in.')
-param logworkspaceResourceGroup string
+param logworkspaceResourceGroup string = 'rg-${EnvironmentType}-la-001'
 
 @description('Name of Log Analytics Workspace for AVD to be joined to.')
-param logworkspaceName string
+param logworkspaceName string = 'la-${EnvironmentType}-monitor-001'
 
 @description('Log Analytics Workspace ID')
 param workspaceID string
@@ -205,17 +219,16 @@ param workspaceID string
 param workspaceKey string
 
 @description('Resource Group that Log Analytics Workspace is located in.')
-param DCRResourceGroup string = 'LogAnalyticsDefaultResources'
+param DCRResourceGroup string = 'rg-${EnvironmentType}-la-001'
 
 param tagParams object = {
-  Dept: 'PrjectName'
-  Environment: 'Dev'
+  Dept: 'ProjectName'
+  Environment: EnvironmentType
 }
 
 //***********************************************************************************************************************
 //Used for Private Endpoints for Hostpool and Workspace
 param targetSubResource array
-param subnetName string
 
 param HPprivateEndpointName string = 'pe-${hostPoolName}'
 param WSprivateEndpointName string = 'pe-${workspaceName}'
@@ -246,12 +259,6 @@ var logAnalyticsResourceId = '/subscriptions/${logworkspaceSub}/resourceGroups/$
 resource resourceGroupDeploy 'Microsoft.Resources/resourceGroups@2024-03-01' existing = {
   name: DCRResourceGroup
 }
-
-resource kv 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
-  name: keyVaultName
-  scope: resourceGroup('${subscriptionID}', '${KeyVaultResourceGroup}')
-}
-
 module DCR './modules/DCR.bicep' = {
   name: 'DCR'
   scope: resourceGroup(DCRResourceGroup)
