@@ -124,11 +124,11 @@ param administratorAccountUserName string
 param administratorAccountPassword string
 
 @description('Local Administrator Login Username for Session Hosts.')
-param localAdministratorAccountUserName string = kv.getSecret('vmAdminUserName')
+param localAdministratorAccountUserName string 
 
 @description('Local Administrator Login Password for Session Hosts.')
 @secure()
-param localAdministratorAccountPassword string = kv.getSecret('vmAdminUserPassword')
+param localAdministratorAccountPassword string 
 
 @description('Resource Group to deploy Session Host VMs into.')
 param vmResourceGroup string
