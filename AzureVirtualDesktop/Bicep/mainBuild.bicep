@@ -1,4 +1,10 @@
 //***********************************************************************************************************************
+//Pre-requsities
+// Azure Subscription
+// Log Analytics Workspace
+// Service Principle for DSC Extension
+
+//***********************************************************************************************************************
 //Core Deployment Parameters
 targetScope = 'subscription'
 param AzTenantID string = subscription().tenantId
